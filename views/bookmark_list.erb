@@ -1,0 +1,8 @@
+<h1> Bookmarks </h1> 
+<p> Your bookmarks are: 
+<ul>
+<% @bookmarks.each do |bookmark| %>
+  <li> <%= bookmark.title %> </li>
+  <% end %>
+  </ul>
+ </p>

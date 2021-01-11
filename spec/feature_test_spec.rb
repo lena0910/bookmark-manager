@@ -6,3 +6,10 @@ feature "bookmark manager index page" do
     expect(page).to have_content('Bookmark Manager')
   end
 end
+
+feature "bookmark list page" do
+  scenario "The page displays bookmarks" do
+    visit "/bookmarks"
+    expect(page).to have_content('Bookmarks')
+  end
+end
