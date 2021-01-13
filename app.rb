@@ -7,7 +7,6 @@ class Bookmark_Manager < Sinatra::Base
   end
 
   get "/bookmarks" do
-    5.times{Bookmark.new("Goggle")}
     @bookmarks = Bookmark.all
     erb (:bookmark_list)
   end

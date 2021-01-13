@@ -1,14 +1,10 @@
 class Bookmark
-  @@all = []
-  attr_reader :title
-
-  def initialize(title)
-    @title = title
-    @@all << self
-  end
-
   def self.all
-    @@all
+    [
+      "http://www.makersacademy.com",
+      "http://www.destroyallsoftware.com",
+      "http://www.google.com"
+     ]
   end
 
 end
