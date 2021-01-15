@@ -2,27 +2,13 @@ require 'pg'
 
 class Bookmark
   def self.all
-    begin
-
-      con = PG.connect :dbname => 'bookmark_manager', :user => 'eevans'
-      
-      rs = con.exec "SELECT * FROM bookmarks"
-  
-      rs.each do |row|
-        puts "%s %s" % [ row['id'], row['url']]
-      end
-      
-  rescue PG::Error => e
-  
-      puts e.message 
-      
-  ensure
-  
-      rs.clear if rs
-      con.close if con
-      
-  end
-    
+    if ENV['ENVIRONMENT'] == 'test'
+      connection = PG.connect :dbname => 'bookmark_manager_test'
+    else
+      connection = PG.connect :dbname => 'bookmark_manager'
+    end
+    result = connection.exec('SELECT * FROM bookmarks')
+    result.map { |bookmark| bookmark['url'] }
     # [
     #   "http://www.makersacademy.com",
     #   "http://www.destroyallsoftware.com",
@@ -30,7 +16,16 @@ class Bookmark
     #  ]
   end
 
+  def self.create(bookmark)
+    if ENV['ENVIRONMENT'] == 'test'
+      connection = PG.connect :dbname => 'bookmark_manager_test'
+    else
+      connection = PG.connect :dbname => 'bookmark_manager'
+    end
+    connection.exec("INSERT INTO bookmarks (url) VALUES('#{bookmark}')")
+  end
 end
+
 
 # <% @bookmarks.each do |bookmark| %>
 #   <li> <%= bookmark %> </li>
